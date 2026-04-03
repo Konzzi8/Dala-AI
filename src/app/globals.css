@@ -1,0 +1,126 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --page: #e4e4e7;
+  --card: #f4f4f5;
+  --card-muted: #e4e4e7;
+  --card-inset: #fafafa;
+  --border: #c4c4c8;
+  --border-strong: #a1a1aa;
+  --text: #18181b;
+  --text-muted: #52525b;
+  --text-subtle: #71717a;
+  --header-bg: rgba(244, 244, 245, 0.96);
+  --input-bg: #fafafa;
+  --shadow-ui: 0 1px 0 rgba(0, 0, 0, 0.06), 0 16px 40px -18px rgba(15, 23, 42, 0.14);
+}
+
+html.dark {
+  --page: #09090b;
+  --card: #18181b;
+  --card-muted: #27272a;
+  --card-inset: #27272a;
+  --border: #3f3f46;
+  --border-strong: #52525b;
+  --text: #fafafa;
+  --text-muted: #a1a1aa;
+  --text-subtle: #71717a;
+  --header-bg: rgba(24, 24, 27, 0.94);
+  --input-bg: #27272a;
+  --shadow-ui: 0 1px 0 rgba(255, 255, 255, 0.04), 0 20px 50px -20px rgba(0, 0, 0, 0.45);
+}
+
+body {
+  background-color: var(--page);
+  color: var(--text);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.app-shell {
+  background-color: var(--page);
+  background-image:
+    radial-gradient(ellipse 100% 80% at 50% -30%, rgba(14, 165, 233, 0.07), transparent 55%),
+    radial-gradient(ellipse 50% 45% at 110% 10%, rgba(99, 102, 241, 0.05), transparent 50%),
+    radial-gradient(ellipse 45% 40% at -10% 90%, rgba(236, 72, 153, 0.04), transparent 50%);
+}
+
+html.dark .app-shell {
+  background-image:
+    radial-gradient(ellipse 100% 80% at 50% -30%, rgba(14, 165, 233, 0.09), transparent 55%),
+    radial-gradient(ellipse 50% 45% at 110% 10%, rgba(99, 102, 241, 0.06), transparent 50%),
+    radial-gradient(ellipse 45% 40% at -10% 90%, rgba(236, 72, 153, 0.05), transparent 50%);
+}
+
+.app-grid {
+  background-image: linear-gradient(rgba(24, 24, 27, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(24, 24, 27, 0.055) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 25%, black 15%, transparent 65%);
+}
+
+html.dark .app-grid {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+}
+
+::selection {
+  background: rgba(14, 165, 233, 0.28);
+  color: #0c1222;
+}
+
+html.dark ::selection {
+  color: #fafafa;
+}
+
+:focus-visible {
+  outline: 2px solid rgba(14, 165, 233, 0.5);
+  outline-offset: 2px;
+}
+
+button:focus-visible {
+  outline-offset: 3px;
+}
+
+.scroll-sleek {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(113, 113, 122, 0.45) transparent;
+}
+
+.scroll-sleek::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scroll-sleek::-webkit-scrollbar-track {
+  background: rgba(228, 228, 231, 0.4);
+  border-radius: 999px;
+}
+
+html.dark .scroll-sleek::-webkit-scrollbar-track {
+  background: rgba(39, 39, 42, 0.6);
+}
+
+.scroll-sleek::-webkit-scrollbar-thumb {
+  background: rgba(113, 113, 122, 0.35);
+  border-radius: 999px;
+}
+
+.scroll-sleek::-webkit-scrollbar-thumb:hover {
+  background: rgba(113, 113, 122, 0.55);
+}

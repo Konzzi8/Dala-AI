@@ -1,0 +1,21 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+
+# next
+/.next/
+/out/
+
+# env
+.env
+.env*.local
+
+# data (local demo store — seeded on first run)
+/data/dala-store.json
+
+# debug
+npm-debug.log*
+.DS_Store
+*.tsbuildinfo
