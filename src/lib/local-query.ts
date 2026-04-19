@@ -64,6 +64,6 @@ export function answerLocalQuery(question: string, shipments: Shipment[]): strin
     "- *Show missing B/Ls*",
     "- *Which shipments are at risk this week?*",
     "",
-    "Add **OPENAI_API_KEY** for richer natural-language answers.",
+    "Add **ANTHROPIC_API_KEY** for AI-powered answers in chat.",
   ].join("\n");
 }

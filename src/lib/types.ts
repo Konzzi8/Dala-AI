@@ -45,6 +45,8 @@ export type Shipment = {
   priorityScore: number;
   createdAt: string;
   updatedAt: string;
+  /** ISO timestamp when user marked shipment reviewed (from chat / UI). */
+  reviewedAt?: string;
 };
 
 export type ParsedEmailExtraction = {

@@ -1,8 +1,10 @@
+import type { SupabaseClient } from "@supabase/supabase-js";
 import type { ParsedEmailExtraction } from "@/lib/types";
 import {
   emailSuggestsRevisedEta,
   heuristicParseEmail,
 } from "@/lib/heuristic-parser";
+import { anthropicParseEmail } from "@/lib/anthropic";
 import { mergeExtractionIntoShipment } from "@/lib/store";
 import { openaiParseEmail } from "@/lib/openai-helpers";
 
@@ -43,32 +45,46 @@ function mergeAiWithHeuristic(
   };
 }
 
-export async function ingestEmailContent(input: {
-  subject: string;
-  from: string;
-  text: string;
-}) {
+export async function ingestEmailContent(
+  client: SupabaseClient,
+  userId: string,
+  input: {
+    subject: string;
+    from: string;
+    text: string;
+    graphMessageId?: string;
+  },
+) {
   const subject = input.subject?.trim() || "(no subject)";
   const from = input.from?.trim() || "unknown@sender.com";
   const text = input.text?.trim() || "";
 
   const fullText = `${subject}\n${text}`;
   const heuristic = heuristicParseEmail(text, subject);
-  const ai = await openaiParseEmail(subject, text);
+  const fromAnthropic = await anthropicParseEmail(subject, text);
+  const fromOpenai = fromAnthropic === null ? await openaiParseEmail(subject, text) : null;
+  const ai = fromAnthropic ?? fromOpenai;
   const usedAi = Boolean(ai);
   const extraction = ai
     ? mergeAiWithHeuristic(ai, heuristic, fullText)
     : heuristic;
 
-  const shipment = await mergeExtractionIntoShipment(extraction, {
+  const shipment = await mergeExtractionIntoShipment(client, userId, extraction, {
     subject,
     from,
     body: text,
+    graphMessageId: input.graphMessageId,
   });
+
+  const parser = usedAi
+    ? fromAnthropic
+      ? ("anthropic" as const)
+      : ("openai" as const)
+    : ("heuristic" as const);
 
   return {
     shipment,
     extraction,
-    parser: usedAi ? ("openai" as const) : ("heuristic" as const),
+    parser,
   };
 }

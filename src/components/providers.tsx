@@ -1,8 +1,8 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { ThemeProvider } from "./theme-provider";
 
+/** App shell; theme after login lives in `DashboardThemeProvider` (dashboard layout only). */
 export function Providers({ children }: { children: ReactNode }) {
-  return <ThemeProvider>{children}</ThemeProvider>;
+  return <>{children}</>;
 }
